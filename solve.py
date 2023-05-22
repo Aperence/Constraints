@@ -12,7 +12,7 @@ def mvr(domains):
 
     return idx
 
-def backtrack(variables, domains, constraints):
+def backtrack(variables, domains, constraints, inference=True):
     """
     Return true if assignment found, results are stored in variables
     """
@@ -22,8 +22,9 @@ def backtrack(variables, domains, constraints):
                 return False
         return True
     
-    restricted_domains = arc_consistency(variables, domains, constraints)
-    domains = restricted_domains
+    if inference:
+        restricted_domains = arc_consistency(variables, domains, constraints)
+        domains = restricted_domains
 
     for domain in domains:
         if (len(domain) == 0):
